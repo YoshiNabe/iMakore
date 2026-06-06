@@ -292,9 +292,9 @@ function updateSessionBar() {
     endBtn?.classList.remove('hidden');
     if (pauseResumeBtn) {
       pauseResumeBtn.classList.remove('hidden');
-      pauseResumeBtn.textContent = '停止';
-      pauseResumeBtn.classList.remove('btn--success');
-      pauseResumeBtn.classList.add('btn--warning');
+      pauseResumeBtn.textContent = 'STOP';
+      pauseResumeBtn.classList.remove('btn--restart');
+      pauseResumeBtn.classList.add('btn--stop');
     }
   }
   // PAUSED
@@ -303,9 +303,9 @@ function updateSessionBar() {
     endBtn?.classList.remove('hidden');
     if (pauseResumeBtn) {
       pauseResumeBtn.classList.remove('hidden');
-      pauseResumeBtn.textContent = '再開';
-      pauseResumeBtn.classList.remove('btn--warning');
-      pauseResumeBtn.classList.add('btn--success');
+      pauseResumeBtn.textContent = 'RESTART';
+      pauseResumeBtn.classList.remove('btn--stop');
+      pauseResumeBtn.classList.add('btn--restart');
     }
   }
 

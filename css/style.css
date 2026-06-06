@@ -111,6 +111,12 @@ body {
 }
 .btn--primary { background: var(--color-primary); color: #fff; }
 .btn--primary:hover:not(:disabled) { background: var(--color-primary-dark); }
+.btn--end     { background: #2a7a82; color: #fff; }
+.btn--end:hover:not(:disabled)     { background: #1f5c63; }
+.btn--stop    { background: #4a8c96; color: #fff; }
+.btn--stop:hover:not(:disabled)    { background: #3a7580; }
+.btn--restart { background: #3d9aa0; color: #fff; }
+.btn--restart:hover:not(:disabled) { background: #2d8088; }
 .btn--danger  { background: var(--color-danger);  color: #fff; }
 .btn--danger:hover:not(:disabled)  { background: var(--color-danger-dark); }
 .btn--warning { background: var(--color-warning); color: #fff; }
