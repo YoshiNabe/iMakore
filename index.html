@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="iMakore — 今どのプロジェクトの業務を行っているかをボタンひとつで記録する稼働時間トラッカー">
+  <title>iMakore — イマコレ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Global storage error banner -->
+  <div id="global-error" class="global-error hidden" role="alert"></div>
+
+  <!-- ── Header ── -->
+  <header class="app-header">
+    <h1 class="app-title">iMakore</h1>
+    <button id="menu-btn" class="icon-btn" data-testid="menu-btn" aria-label="メニューを開く">
+      &#9776;
+    </button>
+  </header>
+
+  <!-- ── Session Bar ── -->
+  <div class="session-bar" role="region" aria-label="作業セッション">
+    <button id="begin-work-btn" class="btn btn--primary" data-testid="begin-work-btn">始業</button>
+    <button id="end-work-btn"   class="btn btn--danger hidden" data-testid="end-work-btn">終業</button>
+  </div>
+
+  <!-- ── Project List ── -->
+  <main class="project-list-container">
+    <div id="project-list" class="project-list" data-testid="project-list" role="list"></div>
+  </main>
+
+  <!-- ── Menu Panel ── -->
+  <div id="menu-panel" class="menu-panel hidden" data-testid="menu-panel" role="dialog" aria-label="メニュー">
+    <div class="menu-header">
+      <span class="menu-title">メニュー</span>
+      <button class="icon-btn"
+              onclick="document.getElementById('menu-panel').classList.add('hidden')"
+              aria-label="メニューを閉じる">✕</button>
+    </div>
+    <div class="menu-body">
+      <button id="add-project-btn" class="menu-btn" data-testid="add-project-btn">＋ プロジェクトを追加</button>
+      <div id="menu-project-list" class="menu-project-list" aria-label="登録済みプロジェクト一覧"></div>
+      <hr class="menu-divider">
+      <button id="calendar-btn" class="menu-btn" data-testid="calendar-btn">📅 カレンダーを表示</button>
+    </div>
+  </div>
+
+  <!-- ── Add Project Dialog ── -->
+  <div id="add-project-dialog" class="dialog-overlay hidden" data-testid="add-project-dialog"
+       role="dialog" aria-modal="true" aria-labelledby="add-dialog-title">
+    <div class="dialog">
+      <h2 id="add-dialog-title" class="dialog-title">プロジェクトを追加</h2>
+      <div class="form-group">
+        <label for="project-name-input" class="form-label">
+          プロジェクト名 <span class="required" aria-hidden="true">*</span>
+        </label>
+        <input type="text" id="project-name-input" class="form-input"
+               placeholder="例: 開発業務" maxlength="50"
+               data-testid="project-name-input" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="project-code-input" class="form-label">プロジェクトコード（任意）</label>
+        <input type="text" id="project-code-input" class="form-input"
+               placeholder="例: PROJ-001" maxlength="20"
+               data-testid="project-code-input" autocomplete="off">
+      </div>
+      <p class="form-error" role="alert"></p>
+      <div class="dialog-actions">
+        <button id="add-project-cancel" class="btn btn--secondary" data-testid="add-project-cancel">キャンセル</button>
+        <button id="add-project-submit" class="btn btn--primary"   data-testid="add-project-submit">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Delete Confirm Dialog ── -->
+  <div id="delete-confirm-dialog" class="dialog-overlay hidden" data-testid="delete-confirm-dialog"
+       role="dialog" aria-modal="true" aria-labelledby="delete-dialog-title">
+    <div class="dialog">
+      <h2 id="delete-dialog-title" class="dialog-title">プロジェクトを削除</h2>
+      <p class="delete-confirm-message"></p>
+      <div class="dialog-actions">
+        <button id="delete-confirm-cancel" class="btn btn--secondary" data-testid="delete-confirm-cancel">キャンセル</button>
+        <button id="delete-confirm-ok"     class="btn btn--danger"    data-testid="delete-confirm-ok">削除する</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Calendar Panel ── -->
+  <div id="calendar-panel" class="calendar-panel hidden" data-testid="calendar-panel"
+       role="dialog" aria-modal="true" aria-label="カレンダー">
+    <div class="calendar-header">
+      <button id="calendar-close-btn" class="icon-btn" data-testid="calendar-close-btn" aria-label="カレンダーを閉じる">✕</button>
+      <div class="calendar-nav" role="navigation" aria-label="月移動">
+        <button id="cal-prev-btn" class="icon-btn" data-testid="cal-prev-btn" aria-label="前月">&#8249;</button>
+        <span id="calendar-month-label" class="calendar-month-label" aria-live="polite"></span>
+        <button id="cal-next-btn" class="icon-btn" data-testid="cal-next-btn" aria-label="次月">&#8250;</button>
+      </div>
+    </div>
+    <div id="calendar-grid" class="calendar-grid" role="grid" aria-label="カレンダー"></div>
+    <div id="day-detail-panel" class="day-detail-panel hidden" aria-live="polite">
+      <h3 class="day-detail-title"></h3>
+      <div class="day-detail-list"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
