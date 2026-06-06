@@ -153,10 +153,10 @@ body {
 .project-btn--cat-order       { border-color: #22a06b; }
 .project-btn--cat-maintenance { border-color: #595757; }
 .project-btn--cat-other       { border-color: #b5b5b6; }
-.project-btn--active.project-btn--cat-dev,
-.project-btn--active.project-btn--cat-order,
-.project-btn--active.project-btn--cat-maintenance,
-.project-btn--active.project-btn--cat-other { border-color: var(--color-active-border); }
+.project-btn--active.project-btn--cat-dev         { border-color: #559fd5; background: rgba(85,159,213,.15); }
+.project-btn--active.project-btn--cat-order       { border-color: #22a06b; background: rgba(34,160,107,.15); }
+.project-btn--active.project-btn--cat-maintenance { border-color: #595757; background: rgba(89,87,87,.15); }
+.project-btn--active.project-btn--cat-other       { border-color: #b5b5b6; background: rgba(181,181,182,.15); }
 
 .project-btn-name {
   font-size: 1rem; font-weight: 600;
