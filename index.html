@@ -15,6 +15,7 @@
   <!-- ── Header ── -->
   <header class="app-header">
     <h1 class="app-title">iMakore</h1>
+    <span id="total-time-display" class="total-time-display" aria-live="polite" aria-label="当日合計時間">00:00:00</span>
     <button id="menu-btn" class="icon-btn" data-testid="menu-btn" aria-label="メニューを開く">
       &#9776;
     </button>
@@ -22,8 +23,10 @@
 
   <!-- ── Session Bar ── -->
   <div class="session-bar" role="region" aria-label="作業セッション">
-    <button id="begin-work-btn" class="btn btn--primary" data-testid="begin-work-btn">始業</button>
-    <button id="end-work-btn"   class="btn btn--danger hidden" data-testid="end-work-btn">終業</button>
+    <button id="refresh-btn"     class="btn btn--secondary"       data-testid="refresh-btn">更新</button>
+    <button id="begin-work-btn"  class="btn btn--primary"         data-testid="begin-work-btn">始業</button>
+    <button id="end-work-btn"    class="btn btn--danger  hidden"  data-testid="end-work-btn">終業</button>
+    <button id="pause-resume-btn" class="btn btn--warning hidden" data-testid="pause-resume-btn">停止</button>
   </div>
 
   <!-- ── Project List ── -->

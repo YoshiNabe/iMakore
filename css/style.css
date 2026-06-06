@@ -4,6 +4,10 @@
   --color-primary-dark:  #1d4ed8;
   --color-danger:        #dc2626;
   --color-danger-dark:   #b91c1c;
+  --color-warning:       #d97706;
+  --color-warning-dark:  #b45309;
+  --color-success:       #059669;
+  --color-success-dark:  #047857;
   --color-bg:            #f9fafb;
   --color-surface:       #ffffff;
   --color-border:        #e5e7eb;
@@ -39,7 +43,15 @@ body {
   border-bottom: 1px solid var(--color-border);
   box-shadow: var(--shadow);
 }
-.app-title { font-size: 1.25rem; font-weight: 800; color: var(--color-primary); letter-spacing: -.5px; }
+.app-title { font-size: 1.25rem; font-weight: 800; color: var(--color-primary); letter-spacing: -.5px; flex-shrink: 0; }
+
+/* ── Total Time Display ───────────────────────────────────────────── */
+.total-time-display {
+  flex: 1; text-align: center;
+  font-size: 1.1rem; font-weight: 700;
+  font-variant-numeric: tabular-nums; letter-spacing: .02em;
+  color: var(--color-text);
+}
 
 /* ── Icon Button ──────────────────────────────────────────────────── */
 .icon-btn {
@@ -54,10 +66,11 @@ body {
 
 /* ── Session Bar ──────────────────────────────────────────────────── */
 .session-bar {
-  display: flex; justify-content: center; gap: 12px;
-  padding: 16px;
+  display: flex; justify-content: center; align-items: center; gap: 10px;
+  padding: 14px 16px;
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
 }
 
 /* ── Buttons ──────────────────────────────────────────────────────── */
@@ -72,6 +85,10 @@ body {
 .btn--primary:hover:not(:disabled) { background: var(--color-primary-dark); }
 .btn--danger  { background: var(--color-danger);  color: #fff; }
 .btn--danger:hover:not(:disabled)  { background: var(--color-danger-dark); }
+.btn--warning { background: var(--color-warning); color: #fff; }
+.btn--warning:hover:not(:disabled) { background: var(--color-warning-dark); }
+.btn--success { background: var(--color-success); color: #fff; }
+.btn--success:hover:not(:disabled) { background: var(--color-success-dark); }
 .btn--secondary { background: var(--color-border); color: var(--color-text); }
 .btn--secondary:hover { background: #d1d5db; }
 .btn--disabled, .btn:disabled { opacity: .45; cursor: not-allowed; }
@@ -135,11 +152,21 @@ body {
 .menu-divider { border: none; border-top: 1px solid var(--color-border); margin: 4px 0; }
 
 .menu-project-list { display: flex; flex-direction: column; gap: 6px; }
-.menu-project-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; }
+.menu-project-row { display: flex; align-items: center; gap: 6px; padding: 6px 0; }
 .menu-project-name {
   flex: 1; font-size: .875rem;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+.menu-order-group { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+.menu-order-btn {
+  min-width: 26px; min-height: 22px;
+  background: none; border: 1px solid var(--color-border);
+  border-radius: 4px; cursor: pointer;
+  font-size: .65rem; color: var(--color-text); line-height: 1;
+  transition: background var(--ease);
+}
+.menu-order-btn:hover:not(:disabled) { background: var(--color-bg); }
+.menu-order-btn:disabled { opacity: .3; cursor: not-allowed; }
 .menu-delete-btn {
   min-height: 34px; padding: 0 10px;
   background: none; border: 1px solid var(--color-danger);

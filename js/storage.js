@@ -71,9 +71,9 @@ export function getDeletedProject(id) { return getAllDeletedProjects()[id] ?? nu
 export function getAllDeletedProjects() { return read(KEYS.DELETED, {}); }
 
 // ── Session snapshot ──────────────────────────────────────────────────────────
-/** @returns {{ activeProjectId: string, projectStartTimestamp: number, sessionDate: string }|null} */
+/** @returns {{ activeProjectId: string, projectStartTimestamp: number, sessionDate: string, isPaused?: boolean }|null} */
 export function getSession() { return read(KEYS.SESSION, null); }
-/** @param {{ activeProjectId: string, projectStartTimestamp: number, sessionDate: string }} s */
+/** @param {{ activeProjectId: string, projectStartTimestamp: number, sessionDate: string, isPaused?: boolean }} s */
 export function saveSession(s) { write(KEYS.SESSION, s); }
 export function clearSession() { write(KEYS.SESSION, null); }
 

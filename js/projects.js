@@ -38,3 +38,19 @@ export function remove(id) {
   _projects = _projects.filter(p => p.id !== id);
   storage.saveProjects(_projects);
 }
+
+/** @param {string} id */
+export function moveUp(id) {
+  const i = _projects.findIndex(p => p.id === id);
+  if (i <= 0) return;
+  [_projects[i - 1], _projects[i]] = [_projects[i], _projects[i - 1]];
+  storage.saveProjects(_projects);
+}
+
+/** @param {string} id */
+export function moveDown(id) {
+  const i = _projects.findIndex(p => p.id === id);
+  if (i < 0 || i >= _projects.length - 1) return;
+  [_projects[i], _projects[i + 1]] = [_projects[i + 1], _projects[i]];
+  storage.saveProjects(_projects);
+}
