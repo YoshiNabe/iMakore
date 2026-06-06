@@ -6,6 +6,16 @@
   <meta name="description" content="iMakore — 今どのプロジェクトの業務を行っているかをボタンひとつで記録する稼働時間トラッカー">
   <title>iMakore — イマコレ</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- ダークモードのフラッシュ防止: DOM 構築前にテーマを適用 -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('imakore_theme');
+        var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = (t === 'dark' || (!t && d)) ? 'dark' : 'light';
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
 
@@ -45,7 +55,8 @@
       <button id="add-project-btn" class="menu-btn" data-testid="add-project-btn">＋ プロジェクトを追加</button>
       <div id="menu-project-list" class="menu-project-list" aria-label="登録済みプロジェクト一覧"></div>
       <hr class="menu-divider">
-      <button id="calendar-btn" class="menu-btn" data-testid="calendar-btn">📅 カレンダーを表示</button>
+      <button id="calendar-btn"     class="menu-btn" data-testid="calendar-btn">カレンダーを表示</button>
+      <button id="theme-toggle-btn" class="menu-btn" data-testid="theme-toggle-btn">ダークモード</button>
     </div>
   </div>
 
@@ -72,6 +83,34 @@
       <div class="dialog-actions">
         <button id="add-project-cancel" class="btn btn--secondary" data-testid="add-project-cancel">キャンセル</button>
         <button id="add-project-submit" class="btn btn--primary"   data-testid="add-project-submit">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Edit Project Dialog ── -->
+  <div id="edit-project-dialog" class="dialog-overlay hidden" data-testid="edit-project-dialog"
+       role="dialog" aria-modal="true" aria-labelledby="edit-dialog-title">
+    <div class="dialog">
+      <h2 id="edit-dialog-title" class="dialog-title">プロジェクトを編集</h2>
+      <input type="hidden" id="edit-project-id">
+      <div class="form-group">
+        <label for="edit-project-name-input" class="form-label">
+          プロジェクト名 <span class="required" aria-hidden="true">*</span>
+        </label>
+        <input type="text" id="edit-project-name-input" class="form-input"
+               placeholder="例: 開発業務" maxlength="50"
+               data-testid="edit-project-name-input" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="edit-project-code-input" class="form-label">プロジェクトコード（任意）</label>
+        <input type="text" id="edit-project-code-input" class="form-input"
+               placeholder="例: PROJ-001" maxlength="20"
+               data-testid="edit-project-code-input" autocomplete="off">
+      </div>
+      <p class="form-error" role="alert"></p>
+      <div class="dialog-actions">
+        <button id="edit-project-cancel" class="btn btn--secondary" data-testid="edit-project-cancel">キャンセル</button>
+        <button id="edit-project-submit" class="btn btn--primary"   data-testid="edit-project-submit">保存</button>
       </div>
     </div>
   </div>

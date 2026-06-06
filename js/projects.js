@@ -39,6 +39,22 @@ export function remove(id) {
   storage.saveProjects(_projects);
 }
 
+/**
+ * Update a project's name and code.
+ * @param {string} id
+ * @param {string} name
+ * @param {string|null} code
+ * @returns {{ id: string, name: string, code: string|null }|null}
+ */
+export function update(id, name, code) {
+  const proj = _projects.find(p => p.id === id);
+  if (!proj) return null;
+  proj.name = name.trim();
+  proj.code = code?.trim() || null;
+  storage.saveProjects(_projects);
+  return proj;
+}
+
 /** @param {string} id */
 export function moveUp(id) {
   const i = _projects.findIndex(p => p.id === id);

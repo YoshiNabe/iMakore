@@ -16,6 +16,23 @@ let _pausedProjectId = null;
 
 const $ = id => document.getElementById(id);
 
+// ── Theme ────────────────────────────────────────────────────────────────────
+
+const THEME_KEY = 'imakore_theme';
+
+function toggleTheme() {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+  try { localStorage.setItem(THEME_KEY, isDark ? 'light' : 'dark'); } catch (e) {}
+  updateThemeButton();
+}
+
+function updateThemeButton() {
+  const btn = $('theme-toggle-btn');
+  if (!btn) return;
+  btn.textContent = document.documentElement.dataset.theme === 'dark' ? 'ライトモード' : 'ダークモード';
+}
+
 // ── Initialization ───────────────────────────────────────────────────────────
 
 function init() {
@@ -28,7 +45,8 @@ function init() {
     if (banner) { banner.textContent = msg; banner.classList.remove('hidden'); }
   });
 
-  menu.init({ onProjectAdded, onProjectDeleted });
+  menu.init({ onProjectAdded, onProjectDeleted, onProjectUpdated });
+  updateThemeButton();
 
   const session = storage.getSession();
   if (session) {
@@ -236,6 +254,14 @@ function onProjectDeleted(projectId) {
   renderMenuProjectList();
 }
 
+/** @param {{ id: string, name: string, code: string|null }} project */
+function onProjectUpdated(project) {
+  renderProjects();
+  // アクティブ・一時停止中のボタンのハイライト状態を復元する
+  const activeId = _state === 'ACTIVE' ? timer.getActiveProjectId() : _pausedProjectId;
+  if (activeId) setActiveButton(activeId);
+}
+
 /** @param {string} projectId */
 function setActiveButton(projectId) {
   document.querySelectorAll('.project-btn').forEach(btn => {
@@ -335,6 +361,13 @@ function renderMenuProjectList() {
     nameEl.textContent = proj.name + (proj.code ? ` (${proj.code})` : '');
     row.appendChild(nameEl);
 
+    const editBtn = document.createElement('button');
+    editBtn.className = 'menu-edit-btn';
+    editBtn.textContent = '編集';
+    editBtn.dataset.testid = `edit-btn-${proj.id}`;
+    editBtn.addEventListener('click', () => menu.showEditDialog(proj.id));
+    row.appendChild(editBtn);
+
     const delBtn = document.createElement('button');
     delBtn.className = 'menu-delete-btn';
     delBtn.textContent = '削除';
@@ -365,8 +398,13 @@ function wireEvents() {
   $('add-project-submit')?.addEventListener('click', () => menu.handleAddSubmit());
   $('add-project-cancel')?.addEventListener('click', () => $('add-project-dialog')?.classList.add('hidden'));
 
+  $('edit-project-submit')?.addEventListener('click', () => menu.handleEditSubmit());
+  $('edit-project-cancel')?.addEventListener('click', () => $('edit-project-dialog')?.classList.add('hidden'));
+
   $('delete-confirm-ok')?.addEventListener('click', () => menu.handleDeleteConfirm());
   $('delete-confirm-cancel')?.addEventListener('click', () => $('delete-confirm-dialog')?.classList.add('hidden'));
+
+  $('theme-toggle-btn')?.addEventListener('click', toggleTheme);
 
   $('calendar-btn')?.addEventListener('click', () => { menu.close(); calendar.show(); });
   $('calendar-close-btn')?.addEventListener('click', () => calendar.hide());

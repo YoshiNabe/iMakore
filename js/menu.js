@@ -6,20 +6,30 @@ import * as storage from './storage.js';
 let _onAdded = null;
 /** @type {((id: string) => void)|null} */
 let _onDeleted = null;
+/** @type {((p: { id:string, name:string, code:string|null }) => void)|null} */
+let _onUpdated = null;
 
 /**
- * @param {{ onProjectAdded: Function, onProjectDeleted: Function }} callbacks
+ * @param {{ onProjectAdded: Function, onProjectDeleted: Function, onProjectUpdated: Function }} callbacks
  */
 export function init(callbacks) {
   _onAdded   = callbacks.onProjectAdded;
   _onDeleted = callbacks.onProjectDeleted;
+  _onUpdated = callbacks.onProjectUpdated;
 }
 
 const $ = id => document.getElementById(id);
 
 export function open()   { $('menu-panel')?.classList.remove('hidden'); }
-export function close()  { $('menu-panel')?.classList.add('hidden'); closeAddDialog(); closeDeleteDialog(); }
+export function close()  {
+  $('menu-panel')?.classList.add('hidden');
+  closeAddDialog();
+  closeEditDialog();
+  closeDeleteDialog();
+}
 export function toggle() { $('menu-panel')?.classList.contains('hidden') ? open() : close(); }
+
+// ── Add ──────────────────────────────────────────────────────────────────────
 
 export function showAddDialog() {
   const dlg = $('add-project-dialog');
@@ -37,7 +47,6 @@ export function handleAddSubmit() {
   const code = /** @type {HTMLInputElement} */ ($('project-code-input')).value.trim() || null;
   const errEl = $('add-project-dialog')?.querySelector('.form-error');
 
-  // BR-01 validation
   if (!name || name.length > 50) {
     if (errEl) errEl.textContent = 'プロジェクト名は必須です（50 文字以内）';
     return;
@@ -52,6 +61,47 @@ export function handleAddSubmit() {
   close();
   _onAdded?.(project);
 }
+
+// ── Edit ──────────────────────────────────────────────────────────────────────
+
+/** @param {string} projectId */
+export function showEditDialog(projectId) {
+  const proj = projects.get(projectId);
+  if (!proj) return;
+  const dlg = $('edit-project-dialog');
+  if (!dlg) return;
+  /** @type {HTMLInputElement} */ ($('edit-project-id')).value = proj.id;
+  /** @type {HTMLInputElement} */ ($('edit-project-name-input')).value = proj.name;
+  /** @type {HTMLInputElement} */ ($('edit-project-code-input')).value = proj.code ?? '';
+  dlg.querySelector('.form-error').textContent = '';
+  dlg.classList.remove('hidden');
+}
+
+function closeEditDialog() { $('edit-project-dialog')?.classList.add('hidden'); }
+
+export function handleEditSubmit() {
+  const id   = /** @type {HTMLInputElement} */ ($('edit-project-id')).value;
+  const name = /** @type {HTMLInputElement} */ ($('edit-project-name-input')).value.trim();
+  const code = /** @type {HTMLInputElement} */ ($('edit-project-code-input')).value.trim() || null;
+  const errEl = $('edit-project-dialog')?.querySelector('.form-error');
+
+  if (!name || name.length > 50) {
+    if (errEl) errEl.textContent = 'プロジェクト名は必須です（50 文字以内）';
+    return;
+  }
+  if (code && code.length > 20) {
+    if (errEl) errEl.textContent = 'プロジェクトコードは 20 文字以内で入力してください';
+    return;
+  }
+
+  const updated = projects.update(id, name, code);
+  if (updated) {
+    closeEditDialog();
+    _onUpdated?.(updated);
+  }
+}
+
+// ── Delete ────────────────────────────────────────────────────────────────────
 
 /** @type {string|null} */
 let _pendingDeleteId = null;
@@ -84,6 +134,8 @@ export function handleDeleteConfirm() {
 }
 
 function closeDeleteDialog() { $('delete-confirm-dialog')?.classList.add('hidden'); }
+
+// ── Utility ───────────────────────────────────────────────────────────────────
 
 /** @param {string} msg */
 function showToast(msg) {

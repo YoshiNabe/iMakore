@@ -23,6 +23,30 @@
   --ease:      200ms ease;
 }
 
+/* ── Dark Mode ────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --color-bg:            #0f172a;
+  --color-surface:       #1e293b;
+  --color-border:        #334155;
+  --color-text:          #f1f5f9;
+  --color-muted:         #94a3b8;
+  --color-active-bg:     #1e3a5f;
+  --color-active-border: #60a5fa;
+  --shadow:    0 1px 3px rgba(0,0,0,.4);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,.6);
+}
+[data-theme="dark"] .form-input {
+  background-color: #0f172a;
+  color: var(--color-text);
+}
+[data-theme="dark"] .btn--secondary {
+  background: #334155;
+  color: var(--color-text);
+}
+[data-theme="dark"] .btn--secondary:hover { background: #475569; }
+[data-theme="dark"] .global-error { background: #450a0a; border-color: #991b1b; }
+[data-theme="dark"] .day-detail-row { background: #0f172a; }
+
 /* ── Reset ────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; -webkit-text-size-adjust: 100%; }
@@ -172,14 +196,28 @@ body {
 .menu-order-btn:hover:not(:disabled),
 .menu-order-btn:active:not(:disabled) { background: var(--color-bg); }
 .menu-order-btn:disabled { opacity: .3; cursor: not-allowed; }
+.menu-edit-btn {
+  min-height: 30px; padding: 0 8px;
+  background: none; border: 1px solid var(--color-primary);
+  color: var(--color-primary); border-radius: var(--radius);
+  cursor: pointer; font-size: .8rem; white-space: nowrap;
+  transition: background var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.menu-edit-btn:hover,
+.menu-edit-btn:active { background: var(--color-active-bg); }
 .menu-delete-btn {
-  min-height: 34px; padding: 0 10px;
+  min-height: 30px; padding: 0 8px;
   background: none; border: 1px solid var(--color-danger);
   color: var(--color-danger); border-radius: var(--radius);
   cursor: pointer; font-size: .8rem; white-space: nowrap;
   transition: background var(--ease);
+  -webkit-tap-highlight-color: transparent;
 }
-.menu-delete-btn:hover { background: #fef2f2; }
+.menu-delete-btn:hover,
+.menu-delete-btn:active { background: #fef2f2; }
+[data-theme="dark"] .menu-delete-btn:hover,
+[data-theme="dark"] .menu-delete-btn:active { background: #450a0a; }
 
 /* ── Dialog Overlay ───────────────────────────────────────────────── */
 .dialog-overlay {
