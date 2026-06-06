@@ -97,6 +97,7 @@ export function handleEditSubmit() {
   const updated = projects.update(id, name, code);
   if (updated) {
     closeEditDialog();
+    close();        // 追加と同じく保存後はメニューも閉じる
     _onUpdated?.(updated);
   }
 }
