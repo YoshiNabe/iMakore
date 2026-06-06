@@ -148,6 +148,16 @@ body {
 .project-btn:hover { border-color: var(--color-primary); }
 .project-btn--active { border-color: var(--color-active-border); background: var(--color-active-bg); }
 
+/* ── Category border colors ───────────────────────────────────────── */
+.project-btn--cat-dev         { border-color: #559fd5; }
+.project-btn--cat-order       { border-color: #22a06b; }
+.project-btn--cat-maintenance { border-color: #595757; }
+.project-btn--cat-other       { border-color: #b5b5b6; }
+.project-btn--active.project-btn--cat-dev,
+.project-btn--active.project-btn--cat-order,
+.project-btn--active.project-btn--cat-maintenance,
+.project-btn--active.project-btn--cat-other { border-color: var(--color-active-border); }
+
 .project-btn-name {
   font-size: 1rem; font-weight: 600;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%;
@@ -258,6 +268,7 @@ body {
   font-family: inherit;
 }
 .form-input:focus { outline: none; border-color: var(--color-primary); }
+.form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235c8d93' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; cursor: pointer; }
 .form-error { color: var(--color-danger); font-size: .875rem; min-height: 1.25em; margin-bottom: 8px; }
 
 .dialog-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }

@@ -2,19 +2,22 @@
 import * as storage from './storage.js';
 import { generateId } from './utils.js';
 
-/** @type {{ id: string, name: string, code: string|null }[]} */
+/** @typedef {'dev'|'order'|'maintenance'|'other'} Category */
+/** @typedef {{ id: string, name: string, code: string|null, category: Category }} Project */
+
+/** @type {Project[]} */
 let _projects = [];
 
 export function load() {
-  _projects = storage.getProjects();
+  _projects = storage.getProjects().map(p => ({ category: 'other', ...p }));
 }
 
-/** @returns {{ id: string, name: string, code: string|null }[]} */
+/** @returns {Project[]} */
 export function getAll() { return _projects; }
 
 /**
  * @param {string} id
- * @returns {{ id: string, name: string, code: string|null }|null}
+ * @returns {Project|null}
  */
 export function get(id) { return _projects.find(p => p.id === id) ?? null; }
 
@@ -22,37 +25,38 @@ export function get(id) { return _projects.find(p => p.id === id) ?? null; }
  * Add a project (BR-01 validation expected from caller).
  * @param {string} name
  * @param {string|null} [code]
- * @returns {{ id: string, name: string, code: string|null }}
+ * @param {Category} [category]
+ * @returns {Project}
  */
-export function add(name, code = null) {
-  const project = { id: generateId(), name: name.trim(), code: code?.trim() || null };
+export function add(name, code = null, category = 'other') {
+  const project = { id: generateId(), name: name.trim(), code: code?.trim() || null, category };
   _projects.push(project);
   storage.saveProjects(_projects);
   return project;
 }
 
 /**
- * @param {string} id
- */
-export function remove(id) {
-  _projects = _projects.filter(p => p.id !== id);
-  storage.saveProjects(_projects);
-}
-
-/**
- * Update a project's name and code.
+ * Update a project's name, code, and category.
  * @param {string} id
  * @param {string} name
  * @param {string|null} code
- * @returns {{ id: string, name: string, code: string|null }|null}
+ * @param {Category} [category]
+ * @returns {Project|null}
  */
-export function update(id, name, code) {
+export function update(id, name, code, category = 'other') {
   const proj = _projects.find(p => p.id === id);
   if (!proj) return null;
   proj.name = name.trim();
   proj.code = code?.trim() || null;
+  proj.category = category;
   storage.saveProjects(_projects);
   return proj;
+}
+
+/** @param {string} id */
+export function remove(id) {
+  _projects = _projects.filter(p => p.id !== id);
+  storage.saveProjects(_projects);
 }
 
 /** @param {string} id */

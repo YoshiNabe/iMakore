@@ -2,11 +2,11 @@
 import * as projects from './projects.js';
 import * as storage from './storage.js';
 
-/** @type {((p: { id:string, name:string, code:string|null }) => void)|null} */
+/** @type {((p: import('./projects.js').Project) => void)|null} */
 let _onAdded = null;
 /** @type {((id: string) => void)|null} */
 let _onDeleted = null;
-/** @type {((p: { id:string, name:string, code:string|null }) => void)|null} */
+/** @type {((p: import('./projects.js').Project) => void)|null} */
 let _onUpdated = null;
 
 /**
@@ -36,6 +36,7 @@ export function showAddDialog() {
   if (!dlg) return;
   /** @type {HTMLInputElement} */ ($('project-name-input')).value = '';
   /** @type {HTMLInputElement} */ ($('project-code-input')).value = '';
+  /** @type {HTMLSelectElement} */ ($('project-category-select')).value = 'other';
   dlg.querySelector('.form-error').textContent = '';
   dlg.classList.remove('hidden');
 }
@@ -43,9 +44,10 @@ export function showAddDialog() {
 function closeAddDialog() { $('add-project-dialog')?.classList.add('hidden'); }
 
 export function handleAddSubmit() {
-  const name = /** @type {HTMLInputElement} */ ($('project-name-input')).value.trim();
-  const code = /** @type {HTMLInputElement} */ ($('project-code-input')).value.trim() || null;
-  const errEl = $('add-project-dialog')?.querySelector('.form-error');
+  const name     = /** @type {HTMLInputElement} */ ($('project-name-input')).value.trim();
+  const code     = /** @type {HTMLInputElement} */ ($('project-code-input')).value.trim() || null;
+  const category = /** @type {HTMLSelectElement} */ ($('project-category-select')).value;
+  const errEl    = $('add-project-dialog')?.querySelector('.form-error');
 
   if (!name || name.length > 50) {
     if (errEl) errEl.textContent = 'プロジェクト名は必須です（50 文字以内）';
@@ -56,7 +58,7 @@ export function handleAddSubmit() {
     return;
   }
 
-  const project = projects.add(name, code);
+  const project = projects.add(name, code, /** @type {any} */ (category));
   closeAddDialog();
   close();
   _onAdded?.(project);
@@ -73,6 +75,7 @@ export function showEditDialog(projectId) {
   /** @type {HTMLInputElement} */ ($('edit-project-id')).value = proj.id;
   /** @type {HTMLInputElement} */ ($('edit-project-name-input')).value = proj.name;
   /** @type {HTMLInputElement} */ ($('edit-project-code-input')).value = proj.code ?? '';
+  /** @type {HTMLSelectElement} */ ($('edit-project-category-select')).value = proj.category ?? 'other';
   dlg.querySelector('.form-error').textContent = '';
   dlg.classList.remove('hidden');
 }
@@ -80,10 +83,11 @@ export function showEditDialog(projectId) {
 function closeEditDialog() { $('edit-project-dialog')?.classList.add('hidden'); }
 
 export function handleEditSubmit() {
-  const id   = /** @type {HTMLInputElement} */ ($('edit-project-id')).value;
-  const name = /** @type {HTMLInputElement} */ ($('edit-project-name-input')).value.trim();
-  const code = /** @type {HTMLInputElement} */ ($('edit-project-code-input')).value.trim() || null;
-  const errEl = $('edit-project-dialog')?.querySelector('.form-error');
+  const id       = /** @type {HTMLInputElement} */ ($('edit-project-id')).value;
+  const name     = /** @type {HTMLInputElement} */ ($('edit-project-name-input')).value.trim();
+  const code     = /** @type {HTMLInputElement} */ ($('edit-project-code-input')).value.trim() || null;
+  const category = /** @type {HTMLSelectElement} */ ($('edit-project-category-select')).value;
+  const errEl    = $('edit-project-dialog')?.querySelector('.form-error');
 
   if (!name || name.length > 50) {
     if (errEl) errEl.textContent = 'プロジェクト名は必須です（50 文字以内）';
@@ -94,10 +98,10 @@ export function handleEditSubmit() {
     return;
   }
 
-  const updated = projects.update(id, name, code);
+  const updated = projects.update(id, name, code, /** @type {any} */ (category));
   if (updated) {
     closeEditDialog();
-    close();        // 追加と同じく保存後はメニューも閉じる
+    close();
     _onUpdated?.(updated);
   }
 }

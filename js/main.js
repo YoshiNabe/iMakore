@@ -212,10 +212,10 @@ function renderProjects() {
   updateBeginBtnState();
 }
 
-/** @param {{ id: string, name: string, code: string|null }} proj */
+/** @param {import('./projects.js').Project} proj */
 function createProjectButton(proj) {
   const btn = document.createElement('button');
-  btn.className = 'project-btn';
+  btn.className = `project-btn project-btn--cat-${proj.category ?? 'other'}`;
   btn.dataset.projectId = proj.id;
   btn.dataset.testid = `project-btn-${proj.id}`;
 

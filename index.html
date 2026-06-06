@@ -57,7 +57,7 @@
       <hr class="menu-divider">
       <button id="calendar-btn"     class="menu-btn" data-testid="calendar-btn">カレンダーを表示</button>
       <button id="theme-toggle-btn" class="menu-btn" data-testid="theme-toggle-btn">ダークモード</button>
-      <div class="menu-version">v1.1.0</div>
+      <div class="menu-version">v1.3.0</div>
     </div>
   </div>
 
@@ -79,6 +79,16 @@
         <input type="text" id="project-code-input" class="form-input"
                placeholder="例: PROJ-001" maxlength="20"
                data-testid="project-code-input" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="project-category-select" class="form-label">種別</label>
+        <select id="project-category-select" class="form-input form-select"
+                data-testid="project-category-select">
+          <option value="dev">開発</option>
+          <option value="order">受注</option>
+          <option value="maintenance">保守</option>
+          <option value="other" selected>その他</option>
+        </select>
       </div>
       <p class="form-error" role="alert"></p>
       <div class="dialog-actions">
@@ -107,6 +117,16 @@
         <input type="text" id="edit-project-code-input" class="form-input"
                placeholder="例: PROJ-001" maxlength="20"
                data-testid="edit-project-code-input" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="edit-project-category-select" class="form-label">種別</label>
+        <select id="edit-project-category-select" class="form-input form-select"
+                data-testid="edit-project-category-select">
+          <option value="dev">開発</option>
+          <option value="order">受注</option>
+          <option value="maintenance">保守</option>
+          <option value="other">その他</option>
+        </select>
       </div>
       <p class="form-error" role="alert"></p>
       <div class="dialog-actions">
