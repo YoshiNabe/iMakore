@@ -46,9 +46,15 @@ export function getToday() {
 }
 
 /**
- * Generate a UUID using crypto.randomUUID().
+ * Generate a unique ID.
+ * Uses crypto.randomUUID() when available; falls back to a timestamp+random string
+ * for older iOS/Android browsers that lack the method.
  * @returns {string}
  */
 export function generateId() {
-  return crypto.randomUUID();
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  // Fallback: timestamp + random hex (sufficient uniqueness for a single-user local app)
+  return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9);
 }

@@ -144,12 +144,6 @@ function resumeWork() {
   startTick();
 }
 
-/** 今日のデータをストレージから再読み込みして表示を更新する（始業前のみ使用）*/
-function refreshToday() {
-  accumulator.loadToday();
-  updateTimerDisplay();
-}
-
 // ── Timer display ────────────────────────────────────────────────────────────
 
 function updateTimerDisplay() {
@@ -257,21 +251,18 @@ function clearActiveButtons() {
 
 function updateSessionBar() {
   const beginBtn       = $('begin-work-btn');
-  const refreshBtn     = $('refresh-btn');
   const endBtn         = $('end-work-btn');
   const pauseResumeBtn = $('pause-resume-btn');
 
   // IDLE
   if (_state === 'IDLE') {
     beginBtn?.classList.remove('hidden');
-    refreshBtn?.classList.remove('hidden');
     endBtn?.classList.add('hidden');
     pauseResumeBtn?.classList.add('hidden');
   }
   // ACTIVE
   if (_state === 'ACTIVE') {
     beginBtn?.classList.add('hidden');
-    refreshBtn?.classList.add('hidden');
     endBtn?.classList.remove('hidden');
     if (pauseResumeBtn) {
       pauseResumeBtn.classList.remove('hidden');
@@ -283,7 +274,6 @@ function updateSessionBar() {
   // PAUSED
   if (_state === 'PAUSED') {
     beginBtn?.classList.add('hidden');
-    refreshBtn?.classList.add('hidden');
     endBtn?.classList.remove('hidden');
     if (pauseResumeBtn) {
       pauseResumeBtn.classList.remove('hidden');
@@ -364,7 +354,6 @@ function renderMenuProjectList() {
 function wireEvents() {
   $('begin-work-btn')?.addEventListener('click', beginWork);
   $('end-work-btn')?.addEventListener('click', endWork);
-  $('refresh-btn')?.addEventListener('click', refreshToday);
   $('pause-resume-btn')?.addEventListener('click', () => {
     if (_state === 'ACTIVE') pauseWork();
     else if (_state === 'PAUSED') resumeWork();
