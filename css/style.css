@@ -1,51 +1,54 @@
 /* ── Custom Properties ────────────────────────────────────────────── */
+/* FIG株式会社コーポレートカラー: #56b3b9 (teal), #559fd5 (blue) */
 :root {
-  --color-primary:       #2563eb;
-  --color-primary-dark:  #1d4ed8;
+  --color-primary:       #559fd5;
+  --color-primary-dark:  #3d88be;
+  --color-accent:        #56b3b9;
+  --color-accent-dark:   #3d9aa0;
   --color-danger:        #dc2626;
   --color-danger-dark:   #b91c1c;
   --color-warning:       #d97706;
   --color-warning-dark:  #b45309;
   --color-success:       #059669;
   --color-success-dark:  #047857;
-  --color-bg:            #f9fafb;
+  --color-bg:            #f0f9fa;
   --color-surface:       #ffffff;
-  --color-border:        #e5e7eb;
-  --color-text:          #111827;
-  --color-muted:         #6b7280;
-  --color-active-bg:     #eff6ff;
-  --color-active-border: #3b82f6;
+  --color-border:        #c5e4e8;
+  --color-text:          #1a3035;
+  --color-muted:         #5c8d93;
+  --color-active-bg:     #e3f5f7;
+  --color-active-border: #56b3b9;
   --radius:    8px;
   --radius-lg: 12px;
-  --shadow:    0 1px 3px rgba(0,0,0,.10);
-  --shadow-lg: 0 4px 16px rgba(0,0,0,.12);
+  --shadow:    0 1px 3px rgba(86,179,185,.12);
+  --shadow-lg: 0 4px 16px rgba(86,179,185,.18);
   --touch:     44px;
   --ease:      200ms ease;
 }
 
 /* ── Dark Mode ────────────────────────────────────────────────────── */
 [data-theme="dark"] {
-  --color-bg:            #0f172a;
-  --color-surface:       #1e293b;
-  --color-border:        #334155;
-  --color-text:          #f1f5f9;
-  --color-muted:         #94a3b8;
-  --color-active-bg:     #1e3a5f;
-  --color-active-border: #60a5fa;
-  --shadow:    0 1px 3px rgba(0,0,0,.4);
-  --shadow-lg: 0 4px 16px rgba(0,0,0,.6);
+  --color-bg:            #0c1d22;
+  --color-surface:       #132830;
+  --color-border:        #1e3f4a;
+  --color-text:          #e2f3f5;
+  --color-muted:         #7ab8be;
+  --color-active-bg:     #193a44;
+  --color-active-border: #56b3b9;
+  --shadow:    0 1px 3px rgba(0,0,0,.45);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,.65);
 }
 [data-theme="dark"] .form-input {
-  background-color: #0f172a;
+  background-color: #0c1d22;
   color: var(--color-text);
 }
 [data-theme="dark"] .btn--secondary {
-  background: #334155;
+  background: #1e3f4a;
   color: var(--color-text);
 }
-[data-theme="dark"] .btn--secondary:hover { background: #475569; }
+[data-theme="dark"] .btn--secondary:hover { background: #284f5c; }
 [data-theme="dark"] .global-error { background: #450a0a; border-color: #991b1b; }
-[data-theme="dark"] .day-detail-row { background: #0f172a; }
+[data-theme="dark"] .day-detail-row { background: #0c1d22; }
 
 /* ── Reset ────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -115,7 +118,7 @@ body {
 .btn--success { background: var(--color-success); color: #fff; }
 .btn--success:hover:not(:disabled) { background: var(--color-success-dark); }
 .btn--secondary { background: var(--color-border); color: var(--color-text); }
-.btn--secondary:hover { background: #d1d5db; }
+.btn--secondary:hover { background: #aacdd2; }
 .btn--disabled, .btn:disabled { opacity: .45; cursor: not-allowed; }
 
 /* ── Project List ─────────────────────────────────────────────────── */
@@ -177,6 +180,11 @@ body {
 }
 .menu-btn:hover { background: var(--color-bg); }
 .menu-divider { border: none; border-top: 1px solid var(--color-border); margin: 4px 0; }
+.menu-version {
+  margin-top: auto; padding-top: 12px;
+  font-size: .75rem; color: var(--color-muted);
+  text-align: center; letter-spacing: .04em;
+}
 
 .menu-project-list { display: flex; flex-direction: column; gap: 6px; }
 .menu-project-row { display: flex; align-items: center; gap: 6px; padding: 6px 0; }
@@ -215,7 +223,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 .menu-delete-btn:hover,
-.menu-delete-btn:active { background: #fef2f2; }
+.menu-delete-btn:active { background: #fff0f0; }
 [data-theme="dark"] .menu-delete-btn:hover,
 [data-theme="dark"] .menu-delete-btn:active { background: #450a0a; }
 
@@ -318,9 +326,9 @@ body {
 
 /* ── Global Error ─────────────────────────────────────────────────── */
 .global-error {
-  background: #fef2f2; color: var(--color-danger);
+  background: #fff0f0; color: var(--color-danger);
   padding: 10px 16px; font-size: .875rem; text-align: center;
-  border-bottom: 1px solid #fecaca;
+  border-bottom: 1px solid #fdb5b5;
 }
 
 /* ── Responsive ───────────────────────────────────────────────────── */

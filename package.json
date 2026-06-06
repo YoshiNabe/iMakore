@@ -1,6 +1,6 @@
 {
   "name": "imakore",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "iMakore — イマコレ: プロジェクト別稼働時間トラッカー",
   "type": "module",
   "scripts": {
