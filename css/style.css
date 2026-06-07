@@ -131,6 +131,12 @@ body {
 .project-list-container { padding: 16px; max-width: 640px; margin: 0 auto; }
 .project-list { display: flex; flex-direction: column; gap: 10px; }
 
+/* ── Block display mode ───────────────────────────────────────────── */
+.project-list--block { display: grid; grid-template-columns: repeat(2, 1fr); }
+.project-list--block .project-btn { min-height: 84px; }
+.project-list--block .project-btn-name { font-size: .88rem; }
+.project-list--block .project-btn-time { font-size: 1.1rem; }
+
 /* ── Project Button ───────────────────────────────────────────────── */
 .project-btn {
   display: flex; flex-direction: column; align-items: flex-start;
@@ -162,7 +168,7 @@ body {
   font-size: 1rem; font-weight: 600;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%;
 }
-.project-btn-code { font-size: .75rem; color: var(--color-muted); }
+.project-btn-code { font-size: .75rem; color: var(--color-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
 .project-btn-time {
   font-size: 1.3rem; font-weight: 700; color: var(--color-primary);
   font-variant-numeric: tabular-nums; letter-spacing: .02em;

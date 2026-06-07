@@ -18,7 +18,27 @@ const $ = id => document.getElementById(id);
 
 // ── Theme ────────────────────────────────────────────────────────────────────
 
-const THEME_KEY = 'imakore_theme';
+const THEME_KEY   = 'imakore_theme';
+
+// ── Display mode ─────────────────────────────────────────────────────────────
+
+const DISPLAY_KEY = 'imakore_display';
+
+function getDisplayMode() {
+  try { return localStorage.getItem(DISPLAY_KEY) === 'block' ? 'block' : 'line'; } catch (e) { return 'line'; }
+}
+
+function applyDisplayMode(mode) {
+  $('project-list')?.classList.toggle('project-list--block', mode === 'block');
+  const btn = $('display-mode-btn');
+  if (btn) btn.textContent = mode === 'block' ? 'ライン表示' : 'ブロック表示';
+}
+
+function toggleDisplayMode() {
+  const next = getDisplayMode() === 'line' ? 'block' : 'line';
+  try { localStorage.setItem(DISPLAY_KEY, next); } catch (e) {}
+  applyDisplayMode(next);
+}
 
 function toggleTheme() {
   const isDark = document.documentElement.dataset.theme === 'dark';
@@ -47,6 +67,7 @@ function init() {
 
   menu.init({ onProjectAdded, onProjectDeleted, onProjectUpdated });
   updateThemeButton();
+  applyDisplayMode(getDisplayMode());
 
   const session = storage.getSession();
   if (session) {
@@ -208,6 +229,7 @@ function renderProjects() {
   if (!container) return;
   container.innerHTML = '';
   projectsMgr.getAll().forEach(proj => container.appendChild(createProjectButton(proj)));
+  applyDisplayMode(getDisplayMode());
   renderMenuProjectList();
   updateBeginBtnState();
 }
@@ -404,6 +426,7 @@ function wireEvents() {
   $('delete-confirm-ok')?.addEventListener('click', () => menu.handleDeleteConfirm());
   $('delete-confirm-cancel')?.addEventListener('click', () => $('delete-confirm-dialog')?.classList.add('hidden'));
 
+  $('display-mode-btn')?.addEventListener('click', toggleDisplayMode);
   $('theme-toggle-btn')?.addEventListener('click', toggleTheme);
 
   $('calendar-btn')?.addEventListener('click', () => { menu.close(); calendar.show(); });
